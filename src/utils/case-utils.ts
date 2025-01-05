@@ -1,17 +1,41 @@
 import { Skin } from '../types';
 
+export function getRarityColor(rarity: string): string {
+  switch (rarity) {
+    case 'Common':
+      return 'text-gray-400';
+    case 'Uncommon':
+      return 'text-blue-400';
+    case 'Rare':
+      return 'text-purple-400';
+    case 'Epic':
+      return 'text-pink-400';
+    case 'Legendary':
+      return 'text-yellow-400';
+    default:
+      return 'text-gray-400';
+  }
+}
+
+export function getRarityWeight(rarity: string): number {
+  switch (rarity) {
+    case 'Common':
+      return 100;
+    case 'Uncommon':
+      return 50;
+    case 'Rare':
+      return 25;
+    case 'Epic':
+      return 10;
+    case 'Legendary':
+      return 5;
+    default:
+      return 100;
+  }
+}
+
 export function getRandomSkin(skins: Skin[]): Skin {
-  const weights = skins.map(skin => {
-    switch (skin.rarity) {
-      case 'Consumer': return 32;
-      case 'Industrial': return 24;
-      case 'Mil-Spec': return 16;
-      case 'Restricted': return 8;
-      case 'Classified': return 4;
-      case 'Covert': return 1;
-      default: return 1;
-    }
-  });
+  const weights = skins.map(skin => getRarityWeight(skin.rarity));
 
   const totalWeight = weights.reduce((a, b) => a + b, 0);
   let random = Math.random() * totalWeight;
