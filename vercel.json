@@ -1,19 +1,9 @@
 {
   "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "package.json",
-      "use": "@vercel/node",
-      "config": { "maxLambdaSize": "50mb" }
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ],
-  "buildCommand": "npm install && npm run build",
-  "outputDirectory": "dist",
-  "public": true
+  ]
 }
