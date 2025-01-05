@@ -1,53 +1,54 @@
 import { Skin } from '../types';
+import { memeImages } from '../memes';
 
 // Define our actual memes with their names and rarities
 const MEME_COLLECTION = [
   {
     id: 'disaster-girl',
     name: 'Disaster Girl | Chaos Edition',
-    image: '/memes/disastergirl.jpg',
+    image: memeImages.disastergirl,
     defaultRarity: 'Epic'
   },
   {
     id: 'distracted',
     name: 'Distracted Boyfriend | Love Triangle',
-    image: '/memes/distractedgirlfriend.png',
+    image: memeImages.distractedgirlfriend,
     defaultRarity: 'Rare'
   },
   {
     id: 'doge',
     name: 'Doge | Much Wow',
-    image: '/memes/doge.png',
+    image: memeImages.doge,
     defaultRarity: 'Legendary'
   },
   {
     id: 'forever-alone',
     name: 'Forever Alone | Solitude',
-    image: '/memes/foreveralone.png',
+    image: memeImages.foreveralone,
     defaultRarity: 'Uncommon'
   },
   {
     id: 'rickroll',
     name: 'Rick Astley | Never Gonna',
-    image: '/memes/rickroll.png',
+    image: memeImages.rickroll,
     defaultRarity: 'Epic'
   },
   {
     id: 'rollsafe',
     name: 'Roll Safe | Big Brain',
-    image: '/memes/rollsafe.jpg',
+    image: memeImages.rollsafe,
     defaultRarity: 'Rare'
   },
   {
     id: 'shrek',
     name: 'Shrek | Smirking',
-    image: '/memes/shreksmirk.jpg',
+    image: memeImages.shreksmirk,
     defaultRarity: 'Legendary'
   },
   {
     id: 'trollface',
     name: 'Troll Face | Problem?',
-    image: '/memes/trollface.jpg',
+    image: memeImages.trollface,
     defaultRarity: 'Common'
   }
 ];
@@ -55,10 +56,32 @@ const MEME_COLLECTION = [
 type MemeWear = 'RTX ON' | 'Full HD' | 'Standard' | 'Pixelated' | 'Minecraft';
 type MemeRarity = 'Common' | 'Uncommon' | 'Rare' | 'Epic' | 'Legendary';
 
-export async function fetchRandomMemes(count: number = 10): Promise<Skin[]> {
+export async function fetchRandomMemes(count: number = 30): Promise<Skin[]> {
   const memes: Skin[] = [];
   
-  for (let i = 0; i < count; i++) {
+  // First, ensure we have at least one of each rarity
+  const rarities: MemeRarity[] = ['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary'];
+  rarities.forEach(rarity => {
+    const memesOfRarity = MEME_COLLECTION.filter(m => m.defaultRarity === rarity);
+    if (memesOfRarity.length > 0) {
+      const meme = memesOfRarity[Math.floor(Math.random() * memesOfRarity.length)];
+      const wear = getRandomMemeWear();
+      const keys = getRandomKeys(rarity);
+      
+      memes.push({
+        id: `${meme.id}-${Date.now()}-guaranteed`,
+        name: meme.name,
+        type: 'Meme',
+        wear,
+        rarity,
+        keys,
+        imageUrl: meme.image
+      });
+    }
+  });
+  
+  // Then fill the rest randomly
+  for (let i = memes.length; i < count; i++) {
     const meme = MEME_COLLECTION[Math.floor(Math.random() * MEME_COLLECTION.length)];
     const wear = getRandomMemeWear();
     const rarity = getRandomMemeRarity(meme.defaultRarity as MemeRarity);
@@ -75,7 +98,8 @@ export async function fetchRandomMemes(count: number = 10): Promise<Skin[]> {
     });
   }
   
-  return memes;
+  // Shuffle the array
+  return memes.sort(() => Math.random() - 0.5);
 }
 
 function getRandomMemeWear(): MemeWear {

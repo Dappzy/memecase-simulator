@@ -19,10 +19,11 @@ export function SpinningCase({ skins, selectedIndex, onComplete }: SpinningCaseP
     const itemWidth = 200; // Width of each item
     const gap = 16; // Gap between items
     const totalWidth = (itemWidth + gap) * skins.length;
-    const spinDuration = 4000; // 4 seconds
+    const spinDuration = 6000; // 6 seconds
     
-    // Calculate final position
-    const finalPosition = -(selectedIndex * (itemWidth + gap) + totalWidth * 2);
+    // Calculate final position (add some extra spins)
+    const extraSpins = 2; // Number of complete spins before landing
+    const finalPosition = -(selectedIndex * (itemWidth + gap) + totalWidth * extraSpins);
     
     // Initial position (3 screens worth of items to the right)
     container.style.transform = `translateX(${totalWidth}px)`;
@@ -30,8 +31,8 @@ export function SpinningCase({ skins, selectedIndex, onComplete }: SpinningCaseP
     // Force a reflow
     container.offsetHeight;
     
-    // Add smooth transition
-    container.style.transition = `transform ${spinDuration}ms cubic-bezier(0.2, 0.5, 0.3, 1)`;
+    // Add smooth transition with easing
+    container.style.transition = `transform ${spinDuration}ms cubic-bezier(0.2, 0.4, 0.1, 1.0)`;
     
     // Move to final position
     container.style.transform = `translateX(${finalPosition}px)`;
@@ -62,12 +63,20 @@ export function SpinningCase({ skins, selectedIndex, onComplete }: SpinningCaseP
     }
   };
 
-  // Create an array with 3 sets of skins for smooth spinning
-  const spinningItems = [...skins, ...skins, ...skins];
+  // Create multiple sets of skins for smooth spinning
+  const spinningItems = [...skins, ...skins, ...skins, ...skins, ...skins];
 
   return (
-    <div className="relative w-full overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 w-0.5 h-full bg-yellow-400 transform -translate-x-1/2 -translate-y-1/2 z-10" />
+    <div className="relative w-full overflow-hidden bg-purple-900/30 p-8">
+      {/* Selection indicator */}
+      <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-yellow-400 transform -translate-x-1/2">
+        <div className="absolute inset-0 animate-pulse bg-yellow-300/50"></div>
+      </div>
+      
+      {/* Side gradients for fade effect */}
+      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-purple-900 to-transparent z-10"></div>
+      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-purple-900 to-transparent z-10"></div>
+
       <div className="relative">
         <div
           ref={containerRef}
@@ -77,7 +86,7 @@ export function SpinningCase({ skins, selectedIndex, onComplete }: SpinningCaseP
           {spinningItems.map((skin, index) => (
             <div
               key={`${skin.id}-${index}`}
-              className="flex-shrink-0 w-48 bg-purple-900/50 p-4 rounded-lg"
+              className="flex-shrink-0 w-48 bg-purple-900/50 p-4 rounded-lg transform transition-transform hover:scale-105"
             >
               <img
                 src={skin.imageUrl}

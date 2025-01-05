@@ -4,7 +4,7 @@ export interface Skin {
   type: string;
   rarity: 'Common' | 'Uncommon' | 'Rare' | 'Epic' | 'Legendary';
   wear: 'RTX ON' | 'Full HD' | 'Standard' | 'Pixelated' | 'Minecraft';
-  price: number;
+  keys: number;
   imageUrl: string;
 }
 
@@ -21,7 +21,7 @@ export interface MarketListing {
   id: string;
   skin: Skin;
   seller: string;
-  price: number;
+  keys: number;
   listingDate: Date;
 }
 
@@ -35,26 +35,26 @@ export const RARITY_CONFIG = {
   Legendary: {
     weight: 5,
     color: 'text-yellow-500',
-    basePrice: 500
+    baseKeys: 25
   },
   Epic: {
     weight: 10,
-    color: 'text-purple-500',
-    basePrice: 100
+    color: 'text-pink-500',
+    baseKeys: 10
   },
   Rare: {
-    weight: 20,
-    color: 'text-blue-500',
-    basePrice: 50
+    weight: 15,
+    color: 'text-purple-500',
+    baseKeys: 5
   },
   Uncommon: {
     weight: 30,
-    color: 'text-green-500',
-    basePrice: 25
+    color: 'text-blue-500',
+    baseKeys: 2
   },
   Common: {
-    weight: 35,
-    color: 'text-gray-500',
-    basePrice: 10
+    weight: 40,
+    color: 'text-gray-400',
+    baseKeys: 1
   }
-} as const;
+};
