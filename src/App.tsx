@@ -59,7 +59,7 @@ function App() {
         onInventoryClick={handleInventoryClick}
       />
       
-      <main className="container mx-auto px-4 py-8 mb-16 mt-24">
+      <main className="container mx-auto px-4 py-8 mb-16 mt-32 md:mt-24">
         {currentPage === 'cases' ? (
           <>
             <h1 className="text-4xl font-bold mb-8 text-center bg-gradient-to-r from-purple-400 to-blue-500 text-transparent bg-clip-text pixel-font-title">
