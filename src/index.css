@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes glow {
+  0%, 100% { 
+    box-shadow: 0 0 20px #fbbf24, 0 0 30px #fbbf24, 0 0 40px #fbbf24;
+    opacity: 0.8;
+  }
+  50% { 
+    box-shadow: 0 0 10px #fbbf24, 0 0 20px #fbbf24, 0 0 30px #fbbf24;
+    opacity: 0.6;
+  }
+}
+
+.glow-effect {
+  animation: glow 2s infinite;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(2px); }
+  75% { transform: translateX(-2px); }
+}
+
+.shake {
+  animation: shake 0.2s cubic-bezier(.36,.07,.19,.97) infinite;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
