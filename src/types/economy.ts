@@ -38,12 +38,14 @@ export interface Transaction {
 // Prices in USD
 export const ECONOMY_CONSTANTS = {
   KEY_PRICE: 2.49,
-  MIN_LISTING_KEYS: 0.03,
-  MAX_LISTING_KEYS: 2000.00,
-  MARKET_FEE_PERCENTAGE: 0.15, // 15% fee like Steam
-  MIN_DEPOSIT: 5.00,
-  MAX_DEPOSIT: 1000.00,
-}
+  MIN_LISTING_PRICE: 0.03,
+  MAX_LISTING_PRICE: 1000.00,
+  MIN_LISTING_KEYS: 1,
+  MAX_LISTING_KEYS: 100,
+  MARKET_FEE_PERCENTAGE: 0.15,
+  MIN_DEPOSIT: 5,
+  MAX_DEPOSIT: 1000
+} as const;
 
 export interface Case {
   id: string;

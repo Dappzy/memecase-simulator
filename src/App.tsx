@@ -1,114 +1,77 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Header } from './components/Header';
+import { Footer } from './components/Footer';
+import { Case, Skin } from './types';
+import { cases } from './data/cases';
 import { CaseCard } from './components/CaseCard';
 import { CaseOpeningModal } from './components/CaseOpening/CaseOpeningModal';
-import { Case, Skin } from './types';
-import { cases, populateCases } from './data/cases';
-import { fetchRandomMemes } from './utils/meme-utils';
 
 function App() {
   const [selectedCase, setSelectedCase] = useState<Case | null>(null);
-  const [inventory, setInventory] = useState<Skin[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [showOpeningModal, setShowOpeningModal] = useState(false);
+  const [userKeys, setUserKeys] = useState(10); // Start with 10 keys
   const [balance, setBalance] = useState(100); // Start with $100
-  const [keys, setKeys] = useState(5); // Start with 5 keys
+  const [inventory, setInventory] = useState<Skin[]>([]);
   const [currentPage, setCurrentPage] = useState<'cases' | 'inventory'>('cases');
 
-  useEffect(() => {
-    populateCases().then(() => setIsLoading(false));
-  }, []);
-
-  const handleOpenCase = async (caseId: string) => {
-    const caseToOpen = cases.find(c => c.id === caseId);
-    if (!caseToOpen) return;
-
-    if (keys < caseToOpen.keys) {
-      alert(`You need ${caseToOpen.keys} key${caseToOpen.keys > 1 ? 's' : ''} to open this vault!`);
-      return;
+  const handleCaseClick = (caseItem: Case) => {
+    if (userKeys >= caseItem.keys) {
+      setSelectedCase(caseItem);
+      setShowOpeningModal(true);
+    } else {
+      alert('Not enough keys! Buy more keys to open this case.');
     }
-    
-    setKeys(prev => prev - caseToOpen.keys); // Use the required number of keys
-    caseToOpen.skins = await fetchRandomMemes(10);
-    setSelectedCase(caseToOpen);
   };
 
-  const handleCaseOpened = (skin: Skin) => {
-    setInventory(prev => [...prev, skin]);
-  };
-
-  const closeModal = () => {
+  const handleCloseModal = () => {
+    setShowOpeningModal(false);
     setSelectedCase(null);
   };
 
-  const buyKey = () => {
-    if (balance >= 2.49) {
-      setBalance(prev => prev - 2.49);
-      setKeys(prev => prev + 1);
-    } else {
-      alert('Insufficient balance!');
+  const handleCaseOpened = (skin: Skin) => {
+    if (selectedCase) {
+      setUserKeys(prev => prev - selectedCase.keys);
+      setInventory(prev => [...prev, skin]);
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-900 to-indigo-900 text-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
-          <p className="text-xl">Loading Meme Vaults...</p>
-        </div>
-      </div>
-    );
-  }
+  const handleBuyKey = () => {
+    const KEY_PRICE = 2.49;
+    if (balance >= KEY_PRICE) {
+      setBalance(prev => prev - KEY_PRICE);
+      setUserKeys(prev => prev + 1);
+    } else {
+      alert('Insufficient balance! Add funds to buy more keys.');
+    }
+  };
+
+  const handleInventoryClick = () => {
+    setCurrentPage(prev => prev === 'cases' ? 'inventory' : 'cases');
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 to-indigo-900 text-white">
-      <div className="fixed top-0 left-0 right-0 bg-purple-900/90 backdrop-blur-sm z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex gap-4">
-              <button 
-                onClick={() => setCurrentPage('cases')}
-                className={`px-4 py-2 pixel-corners pixel-border ${currentPage === 'cases' ? 'bg-purple-700' : 'hover:bg-purple-800'} pixel-font-clean`}
-              >
-                Cases
-              </button>
-              <button 
-                onClick={() => setCurrentPage('inventory')}
-                className={`px-4 py-2 pixel-corners pixel-border ${currentPage === 'inventory' ? 'bg-purple-700' : 'hover:bg-purple-800'} pixel-font-clean`}
-              >
-                Inventory ({inventory.length})
-              </button>
-            </div>
-            <div className="flex gap-4 items-center">
-              <div className="bg-purple-800 px-4 py-2 pixel-corners pixel-border">
-                <span className="pixel-font">Keys: {keys}</span>
-                <button 
-                  onClick={buyKey}
-                  className="ml-2 bg-purple-600 px-2 py-1 pixel-corners hover:bg-purple-700 pixel-font-clean"
-                >
-                  Buy ($2.49)
-                </button>
-              </div>
-              <div className="bg-purple-800 px-4 py-2 pixel-corners pixel-border pixel-font">
-                Balance: ${balance.toFixed(2)}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
+      <Header 
+        userKeys={userKeys}
+        balance={balance}
+        inventoryCount={inventory.length}
+        onBuyKey={handleBuyKey}
+        onInventoryClick={handleInventoryClick}
+      />
       
-      <main className="max-w-7xl mx-auto px-4 pt-24 pb-12">
+      <main className="container mx-auto px-4 py-8 mb-16 mt-24">
         {currentPage === 'cases' ? (
           <>
             <h1 className="text-4xl font-bold mb-8 text-center bg-gradient-to-r from-purple-400 to-blue-500 text-transparent bg-clip-text pixel-font-title">
               Meme Vaults
             </h1>
+            
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {cases.map(caseItem => (
+              {cases.map((caseItem) => (
                 <CaseCard
                   key={caseItem.id}
                   caseItem={caseItem}
-                  onClick={() => handleOpenCase(caseItem.id)}
+                  onClick={() => handleCaseClick(caseItem)}
                 />
               ))}
             </div>
@@ -142,13 +105,15 @@ function App() {
         )}
       </main>
 
-      {selectedCase && (
+      {showOpeningModal && selectedCase && (
         <CaseOpeningModal
           caseItem={selectedCase}
-          onClose={closeModal}
+          onClose={handleCloseModal}
           onComplete={handleCaseOpened}
         />
       )}
+
+      <Footer />
     </div>
   );
 }

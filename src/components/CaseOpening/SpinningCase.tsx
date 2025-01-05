@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Skin } from '../../types';
 import '../../styles/fonts.css';
 
@@ -11,8 +11,8 @@ interface SpinningCaseProps {
 
 export function SpinningCase({ skins, selectedSkinIndex, isSpinning, onSpinComplete }: SpinningCaseProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [itemWidth, setItemWidth] = useState(0);
-  const [finalPosition, setFinalPosition] = useState(0);
+  const [itemWidth, setItemWidth] = React.useState(0);
+  const [finalPosition, setFinalPosition] = React.useState(0);
 
   // Calculate item width on mount
   useEffect(() => {
@@ -26,7 +26,7 @@ export function SpinningCase({ skins, selectedSkinIndex, isSpinning, onSpinCompl
   useEffect(() => {
     if (isSpinning && selectedSkinIndex >= 0) {
       // Add extra offset to ensure items spin past the viewport first
-      const extraSpinDistance = window.innerWidth * 2;
+      const extraSpinDistance = window.innerWidth * 3; // Increased for longer spin
       const position = -(selectedSkinIndex * itemWidth + extraSpinDistance);
       setFinalPosition(position);
     }
@@ -35,12 +35,12 @@ export function SpinningCase({ skins, selectedSkinIndex, isSpinning, onSpinCompl
   const spinStyle = {
     transform: `translateX(${finalPosition}px)`,
     transition: isSpinning 
-      ? 'transform 4s cubic-bezier(0.15, 0.85, 0.35, 1.0)' 
+      ? 'transform 8s cubic-bezier(0.15, 0.85, 0.35, 1.0)' // Increased from 4s to 8s
       : 'none'
   };
 
   // Create more duplicates for a longer spinning effect
-  const duplicatedSkins = [...skins, ...skins, ...skins, ...skins, ...skins];
+  const duplicatedSkins = [...skins, ...skins, ...skins, ...skins, ...skins, ...skins]; // Added more duplicates
 
   return (
     <div className="relative w-full overflow-hidden bg-gradient-to-br from-purple-900/30 to-indigo-900/30 p-6 pixel-corners pixel-border scanline">

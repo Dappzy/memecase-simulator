@@ -30,3 +30,19 @@
 .perspective-1000 {
   perspective: 1000px;
 }
+
+/* Add margin to main content to prevent footer overlap */
+main {
+  margin-bottom: 4rem; /* Adjust based on footer height */
+}
+
+/* Ensure footer stays at bottom */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}

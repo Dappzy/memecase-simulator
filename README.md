@@ -11,7 +11,7 @@ A retro-styled meme case opening simulator with pixel-perfect UI and smooth anim
 </kbd>
 
 [![Stars](https://img.shields.io/github/stars/Dappzy/memecase-simulator?style=social)](https://github.com/Dappzy/memecase-simulator/stargazers)
-[![License](https://img.shields.io/github/license/Dappzy/memecase-simulator)](https://github.com/Dappzy/memecase-simulator/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/License-Custom-blue)](https://github.com/Dappzy/memecase-simulator/blob/main/LICENSE)
 [![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
@@ -133,7 +133,13 @@ We love contributions! Whether you're fixing bugs, adding features, or improving
 
 ## 📜 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+This project is licensed under a custom license that requires:
+- Attribution to the original project and author (@ethkillerwhale)
+- Permission for commercial use
+- Open source maintenance
+- Revenue sharing for commercial applications
+
+See the [LICENSE](LICENSE) file for details.
 
 ## 🙌 Acknowledgments
 

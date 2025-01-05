@@ -2,9 +2,9 @@ import { Case } from '../types';
 import { fetchRandomMemes } from '../utils/meme-utils';
 
 // Import case icons
-import ClassicIcon from '../caseicons/Classic.jpg';
-import GodIcon from '../caseicons/God.jpg';
-import LegendIcon from '../caseicons/Legend.jpg';
+import ClassicIcon from '@/caseicons/Classic.jpg';
+import GodIcon from '@/caseicons/God.jpg';
+import LegendIcon from '@/caseicons/Legend.jpg';
 
 // Initial empty cases
 export const cases: Case[] = [
@@ -19,16 +19,16 @@ export const cases: Case[] = [
   {
     id: 'viral-legends',
     name: 'Viral Legends Vault',
-    description: "Premium collection of internet culture's greatest hits. Contains high-quality reaction images and legendary viral moments.",
-    keys: 3,
+    description: 'Elite tier memes that achieved legendary status. Contains rare pepes, dank classics, and internet hall of fame entries.',
+    keys: 2,
     imageUrl: LegendIcon,
     skins: [] // Will be populated dynamically
   },
   {
-    id: 'god-tier-collection',
+    id: 'god-tier',
     name: 'God Tier Collection',
-    description: 'The ultimate vault containing the most prestigious and rare internet phenomena. Features the absolute pinnacle of meme culture.',
-    keys: 5,
+    description: 'The most prestigious memes ever created. Features ultra-rare specimens and the dankest of the dank.',
+    keys: 3,
     imageUrl: GodIcon,
     skins: [] // Will be populated dynamically
   }
@@ -36,9 +36,9 @@ export const cases: Case[] = [
 
 // Function to populate cases with random memes
 export async function populateCases() {
-  // Populate each case with random memes
   for (const caseItem of cases) {
-    caseItem.skins = await fetchRandomMemes(10);
+    const memeSkins = await fetchRandomMemes(10); // Get 10 random memes for each case
+    caseItem.skins = memeSkins;
   }
 }
 
