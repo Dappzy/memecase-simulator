@@ -2,9 +2,9 @@ import { Case } from '../types';
 import { fetchRandomMemes } from '../utils/meme-utils';
 
 // Import case icons
-import ClassicIcon from '@/caseicons/Classic.jpg';
-import GodIcon from '@/caseicons/God.jpg';
-import LegendIcon from '@/caseicons/Legend.jpg';
+import ClassicIcon from '../caseicons/Classic.jpg';
+import GodIcon from '../caseicons/God.jpg';
+import LegendIcon from '../caseicons/Legend.jpg';
 
 // Initial empty cases
 export const cases: Case[] = [
@@ -35,10 +35,9 @@ export const cases: Case[] = [
 ];
 
 // Function to populate cases with random memes
-export async function populateCases() {
+async function populateCases() {
   for (const caseItem of cases) {
-    const memeSkins = await fetchRandomMemes(10); // Get 10 random memes for each case
-    caseItem.skins = memeSkins;
+    caseItem.skins = await fetchRandomMemes(10);
   }
 }
 
