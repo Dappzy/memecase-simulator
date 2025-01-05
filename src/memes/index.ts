@@ -1,5 +1,5 @@
 import disastergirl from './disastergirl.jpg';
-import distractedgirlfriend from './distractedgirlfriend.jpg';
+import distractedgirlfriend from './distractedgirlfriend.png';
 import doge from './doge.png';
 import foreveralone from './foreveralone.png';
 import rickroll from './rickroll.png';

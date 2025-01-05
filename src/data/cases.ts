@@ -1,5 +1,6 @@
 import { Case } from '../types';
 import { fetchRandomMemes } from '../utils/meme-utils';
+import { ClassicIcon, GodIcon, LegendIcon } from '../public/Caseicons';
 
 // Initial empty cases
 export const cases: Case[] = [
@@ -8,7 +9,7 @@ export const cases: Case[] = [
     name: 'Classic Meme Vault',
     description: 'A collection of timeless internet classics and viral sensations that defined an era. Features iconic moments and unforgettable reactions.',
     keys: 1,
-    imageUrl: '/caseicons/Classic.jpg',
+    imageUrl: ClassicIcon,
     skins: [] // Will be populated dynamically
   },
   {
@@ -16,7 +17,7 @@ export const cases: Case[] = [
     name: 'Viral Legends Vault',
     description: 'Elite tier memes that achieved legendary status. Contains rare pepes, dank classics, and internet hall of fame entries.',
     keys: 2,
-    imageUrl: '/caseicons/Legend.jpg',
+    imageUrl: LegendIcon,
     skins: [] // Will be populated dynamically
   },
   {
@@ -24,7 +25,7 @@ export const cases: Case[] = [
     name: 'God Tier Collection',
     description: 'The most prestigious memes ever created. Features ultra-rare specimens and the dankest of the dank.',
     keys: 3,
-    imageUrl: '/caseicons/God.jpg',
+    imageUrl: GodIcon,
     skins: [] // Will be populated dynamically
   }
 ];

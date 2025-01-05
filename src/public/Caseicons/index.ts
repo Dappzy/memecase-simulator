@@ -1,9 +1,9 @@
-import Classic from './Classic.jpg';
-import God from './God.jpg';
-import Legend from './Legend.jpg';
+import ClassicIcon from './Classic.jpg';
+import GodIcon from './God.jpg';
+import LegendIcon from './Legend.jpg';
 
-export const caseIcons = {
-  Classic,
-  God,
-  Legend
+export {
+  ClassicIcon,
+  GodIcon,
+  LegendIcon
 };
